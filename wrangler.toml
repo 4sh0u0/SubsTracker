@@ -2,6 +2,7 @@ name = "subscription-manager"
 main = "src/index.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
+account_id = "e89469db90ec9fb906ffd7b464be96f1"
 
 [env.production]
 name = "subscription-manager"
@@ -19,9 +20,35 @@ directory = "./public"
 binding = "ASSETS"
 
 # 定时任务配置 - 每小时检查一次（UTC）
+
+
+
+
+
+
+# KV 命名空间配置（自动生成）
+[[kv_namespaces]]
+binding = "SUBSCRIPTIONS_KV"
+id = "fbb17deba8434a7eac157ef8bfb10881"
+preview_id = "7b328d077112478eb0f21f0b9ee8d721"
+
 [triggers]
-crons = ["0 * * * *"]
+crons = ["0 0 * * *"]
 
 # 环境变量（可选，也可以在 Cloudflare Dashboard 中设置）
 [vars]
 ENVIRONMENT = "production"
+
+[[routes]]
+pattern = "subs.4sh.ltd/*"
+zone_id = "59ad25b43367d0ac8e1ada71e3d993a1"
+
+[placement]
+mode = "smart"
+
+[observability]
+[observability.logs]
+enabled = true
+invocation_logs = true
+[observability.traces]
+enabled = true
